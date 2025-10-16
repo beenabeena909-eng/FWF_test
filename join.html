@@ -92,8 +92,9 @@
       mobile: data.mobile,
       email: data.email,
       type: 'Membership',
-      amount: '200'
+      amount: '200',
+      callback: window.location.origin + '/payment-success.html'
     });
-    window.location.href = 'test-payment.html?' + params.toString();
+    window.location.href = window.location.origin + '/test-payment.html?' + params.toString();
   });
 </script>

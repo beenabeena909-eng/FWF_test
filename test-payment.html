@@ -219,15 +219,15 @@
       const txnId = 'TEST_TXN_' + Date.now();
       
       // Redirect to payment success page
-      const callback = urlParams.get('callback') || '/payment-success.html';
-      const successUrl = `${callback}?status=success&txn_id=${txnId}&amount=${urlParams.get('amount')}`;
+      const callback = urlParams.get('callback') || window.location.origin + '/payment-success.html';
+      const successUrl = `${callback}?status=success&txn_id=${txnId}&amount=${urlParams.get('amount')}&name=${encodeURIComponent(urlParams.get('name'))}&email=${encodeURIComponent(urlParams.get('email'))}&mobile=${encodeURIComponent(urlParams.get('mobile'))}`;
       
       window.location.href = successUrl;
     }
 
     function simulateFail() {
       // Redirect to payment success page with failure status
-      const callback = urlParams.get('callback') || '/payment-success.html';
+      const callback = urlParams.get('callback') || window.location.origin + '/payment-success.html';
       const failUrl = `${callback}?status=failed&error=Payment cancelled by user`;
       
       window.location.href = failUrl;
