@@ -255,14 +255,27 @@
 
     async function processMembership() {
       try {
-        // Get pending member data from localStorage
-        const pendingMemberData = localStorage.getItem('pendingMember');
+        // Get member data from URL parameters OR localStorage
+        let memberData;
         
-        if (!pendingMemberData) {
-          throw new Error('No pending membership data found');
-        }
+        // First try to get from URL parameters (from test-payment redirect)
+        if (urlParams.get('name') && urlParams.get('email')) {
+          memberData = {
+            name: decodeURIComponent(urlParams.get('name')),
+            mobile: decodeURIComponent(urlParams.get('mobile') || ''),
+            email: decodeURIComponent(urlParams.get('email')),
+            aadhar: decodeURIComponent(urlParams.get('aadhar') || '')
+          };
+        } else {
+          // Fallback to localStorage
+          const pendingMemberData = localStorage.getItem('pendingMember');
+          
+          if (!pendingMemberData) {
+            throw new Error('No pending membership data found');
+          }
 
-        const memberData = JSON.parse(pendingMemberData);
+          memberData = JSON.parse(pendingMemberData);
+        }
         
         // Call backend API to create member
         const response = await fetch('/api/pay/simulate-join', {
