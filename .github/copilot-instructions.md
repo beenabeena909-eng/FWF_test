@@ -40,6 +40,19 @@
 - **Express, SQLite, Mongoose, Nodemailer, Bcrypt, JWT**
 - **Environment variables**: Must be set for DB/email integration
 
+## MongoDB Credential Example
+To connect to MongoDB Atlas, set your environment variables as follows:
+
+```
+MONGODB_URI=mongodb+srv://beenabeena909_db_user:q75H997QJtJrBCzG@<your-cluster-url>/test?retryWrites=true&w=majority
+```
+Replace `<your-cluster-url>` with your actual cluster hostname from MongoDB Atlas.
+
+**Username:** beenabeena909_db_user
+**Password:** q75H997QJtJrBCzG
+
+Store these securely in your `.env` file and never commit credentials to version control.
+
 ## Example Patterns
 - Add API routes in `api/` using Mongoose models
 - Backend logic: use prepared statements and role checks (`backend/server.js`)

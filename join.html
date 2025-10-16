@@ -74,7 +74,7 @@
 </section>
 
 <script>
-  // On submit, save details and go to step-2 page
+  // On submit, save details and go to test-payment.html for online testing
   document.getElementById('memberForm').addEventListener('submit', (e)=>{
     e.preventDefault();
     const f = e.target;
@@ -86,7 +86,14 @@
       project:f.project.value
     };
     sessionStorage.setItem('fwfJoinData', JSON.stringify(data));
-    // change filename if your payment page is different
-    window.location.href = 'join-payment.html';
+    // Redirect to test-payment.html with details as query params
+    const params = new URLSearchParams({
+      name: data.name,
+      mobile: data.mobile,
+      email: data.email,
+      type: 'Membership',
+      amount: '200'
+    });
+    window.location.href = 'test-payment.html?' + params.toString();
   });
 </script>
