@@ -796,13 +796,9 @@
     const email = encodeURIComponent(formData.email);
     const amount = 200; // Monthly membership fee
     
-    // Payment gateway URL
-    // FOR LOCALHOST TESTING: Use test-payment.html
-    // FOR PRODUCTION: Replace with actual payment gateway (Razorpay, PayU, etc.)
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const gatewayUrl = isLocalhost 
-      ? '/test-payment.html'  // Test gateway for localhost
-      : 'https://payments.example.com/checkout';  // Production gateway (replace with actual)
+    // Payment gateway URL - using test-payment.html for testing (both local and online)
+    // TODO: Replace with actual payment gateway (Razorpay, PayU, etc.) when ready for production
+    const gatewayUrl = window.location.origin + '/test-payment.html';
     
     const qs = `?amount=${amount}&type=membership&name=${name}&mobile=${mobile}&email=${email}&callback=${encodeURIComponent(window.location.origin + '/payment-success.html')}`;
     
