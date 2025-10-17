@@ -277,19 +277,20 @@
           memberData = JSON.parse(pendingMemberData);
         }
         
-        // Call backend API to create member
-        const response = await fetch('/api/pay/simulate-join', {
+        // Call backend API to create member (using serverless API endpoint for Vercel)
+        const response = await fetch('/api/join', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             name: memberData.name,
+            fullName: memberData.name,
             mobile: memberData.mobile,
             email: memberData.email,
-            aadhar: memberData.aadhar,
-            transactionId: transactionId,
-            amount: 200
+            aadhar: memberData.aadhar || '',
+            project: memberData.project || 'General',
+            paymentRef: transactionId
           })
         });
 
@@ -311,7 +312,8 @@
           
           // Store member ID in session for dashboard access
           sessionStorage.setItem('currentMemberId', result.memberId);
-          sessionStorage.setItem('memberPassword', result.password);
+          // Note: Password will be set via email link
+          sessionStorage.setItem('memberEmail', memberData.email);
           
         } else {
           throw new Error(result.error || 'Failed to create membership');
