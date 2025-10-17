@@ -323,7 +323,16 @@
         console.error('Membership processing error:', error);
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('errorState').style.display = 'block';
-        document.getElementById('errorMessage').textContent = error.message;
+        
+        // Show detailed error message
+        let errorMsg = error.message;
+        if (errorMsg.includes('MongooseServerSelectionError')) {
+          errorMsg = 'Database connection failed. Please ensure MongoDB IP whitelist includes 0.0.0.0/0 (Allow from anywhere) in Atlas Network Access settings.';
+        } else if (errorMsg.includes('fetch')) {
+          errorMsg = 'API connection failed. Please check if environment variables are set in Vercel.';
+        }
+        
+        document.getElementById('errorMessage').textContent = errorMsg;
       }
     }
 
